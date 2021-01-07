@@ -3,89 +3,96 @@ const World= Matter.World;
 const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
-var ground,boxObject,polygon;
-var slingShot,score;
+var ground,polygon,polygon_img;
+var slingShot,score,ground,stand1,stand2;
+var gameState,block;
 
 function preload() {
-    image(CENTER);
-    Image(polygon.png,polygon,polygon.position.x,polygon.position.y,40,40);
+   // imageMode(CENTER);
+  polygon_img=loadImage("polygon.png");
     
 }
 
 function setup(){
-    var canvas = createCanvas(100,200);
+    var canvas = createCanvas(900,400);
     engine = Engine.create();
     world = engine.world;
+    ground = new Ground();
+  stand1 = new Stand(390,300,250,10);
+  stand2 = new Stand(700,200,200,10);
 
-boxObject1=new box(390,155,30,40);
-boxObject2=new box(360,195,30,40);
-boxObject3=new box(390,195,30,40);
-boxObject4=new box(420,195,30,40);
-boxObject5=new box(330,235,30,40);
-boxObject6=new box(360,235,30,40);
-boxObject8=new box(390,235,30,40);
-boxObject9=new box(420,235,30,40);
-boxObject10=new box(420,235,30,40);
+  block1 = new Box(300,275,30,40);
+  console.log(block1);
+  block2 = new Box(330,275,30,40);
+  block3 = new Box(360,275,30,40);
+  block4 = new Box(390,275,30,40);
+  block5 = new Box(420,275,30,40);
+  block6 = new Box(450,275,30,40);
+  block7 = new Box(480,275,30,40);
+  //level two
+  block8 = new Box(330,235,30,40);
+  block9 = new Box(360,235,30,40);
+  block10 = new Box(390,235,30,40);
 
-polygon= bodies.circle(50,20,20);
-world.add(world,polygon);
+polygon= Bodies.circle(50,200,20);
+World.add(world,polygon);
 
-slingShot=new slinShot(this.polygon,{x:100,y:200});
+slingShot=new Slingshot(this.polygon,{x:100,y:200});
 }
 
 function draw(){
- background(backgroundImg);
+ background("green");
 Engine.update(engine);
 noStroke();
 textSize(35)
 fill("white")
 text("SCORE:"+score,750,40);
-boxObject1.display();
-boxObject2.display();
-boxObject3.display();
-boxObject4.display();
-boxObject5.display();
-boxObject6.display();
-boxObject7.display();
-boxObject8.display();
-boxObject9.display();
-boxObject10.display();
-boxObject1.score();
-boxObject2.score();
-boxObject3.score();
-boxObject4.score();
-boxObject5.score();
-boxObject6.score();
-boxObject7.score();
-boxObject8.score();
-boxObject9.score();
-boxObject10.score();
-polygon.display();
-line(polygon.body.position.x,polygon.body.position.y,constraintlog.body.position.x,constraintlog.body.position.y)
+strokeWeight(2);
+  stroke(15);
+  ground.display();
+stand1.display();
+stand2.display();
+  fill("skyblue");
+  block1.display();
+  block2.display();
+  block3.display();
+  block4.display();
+  block5.display();
+  block6.display();
+  block7.display();
+  fill("red");
+  block8.display();
+  block9.display();
+  block10.display();
+
+fill("gold");
+  imageMode(CENTER)
+  image(polygon_img ,polygon.position.x,polygon.position.y,40,40);
+slingShot.display();
+block1.score();
+  block2.score();
+  block3.score();
+  block4.score();
+  block5.score();
+  block6.score();
+  block7.score();
+  block8.score();
+  block9.score();
+  block10.score();
 }
 
-
-
-
-
-mouseReleased();
-mouseDragged();
-KeyPressed();
-
-drawSprites();
 
 function mouseDragged(){
-     if (gameState!=="launched"){
-         Matter.Body.setPosition(polygon.body, {x: mouseX , y: mouseY});
-     }
+   
+         Matter.Body.setPosition(polygon.body, {x: mouseX , y: mouseY})
 }
 function mouseReleased(){
-    polygon.fly();
-    gameState = "launched";
+    slingShot.fly();
+   
 }
 
-function KeyPressed(){
+function keyPressed(){
     if(keycode===32){
-        slingshot.attach(this.polygon);
+        slingShot.attach(this.polygon);
     }
     }
